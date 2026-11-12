@@ -60,13 +60,13 @@ export function Contact() {
                 href={c.href}
                 target={external ? "_blank" : undefined}
                 rel={external ? "noopener noreferrer" : undefined}
-                className="grid min-h-16 flex-1 grid-cols-[6.5rem_1fr_auto] items-center gap-4 py-5 sm:grid-cols-[10rem_1fr_auto] lg:min-h-20 lg:grid-cols-[14rem_1fr_auto]"
+                className="grid min-h-16 flex-1 grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 py-5 sm:grid-cols-[10rem_1fr_auto] lg:min-h-20 lg:grid-cols-[14rem_1fr_auto]"
               >
-                <span className="type-label text-muted-foreground">{c.label}</span>
-                <span className="truncate text-base text-foreground transition-colors group-hover:text-ember-bright sm:text-lg lg:text-2xl">
+                <span className="type-label col-start-1 row-start-1 text-muted-foreground">{c.label}</span>
+                <span className="col-start-1 row-start-2 min-w-0 break-words text-lg text-foreground transition-colors group-hover:text-ember-bright sm:col-start-2 sm:row-start-1 lg:text-2xl">
                   {c.handle}
                 </span>
-                <ArrowUpRight className="text-muted-foreground transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ember-bright" />
+                <ArrowUpRight className="col-start-2 row-span-2 row-start-1 text-muted-foreground sm:col-start-3 sm:row-span-1 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ember-bright" />
               </a>
               {"copy" in c && <CopyButton value={c.copy} />}
             </li>

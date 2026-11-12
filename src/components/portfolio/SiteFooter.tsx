@@ -2,8 +2,8 @@ import { profile } from "@/content/portfolio";
 
 export function SiteFooter() {
   return (
-    <footer className="shell border-t border-line py-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <footer className="shell">
+      <div className="flex flex-col gap-4 border-t border-line py-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="font-mono text-xs text-muted-foreground">
           © {new Date().getFullYear()} {profile.name}
         </p>

@@ -28,3 +28,12 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- All portfolio facts (profile, projects, links, technologies, contacts) live in `src/content/portfolio.ts`; components only render them, so content edits never touch layout code.
+- The site is one long page at `/` with five anchored sections (`#inicio`, `#sobre`, `#projetos`, `#tecnologias`, `#contato`), because the owner explicitly asked for a single scrolling portfolio.
+- Scroll reveals use the native IntersectionObserver hook in `src/hooks/use-reveal.ts` plus `[data-reveal]`/`[data-rule]` attributes, not GSAP, to avoid an extra dependency; elements visible on load are never hidden and nothing animates under `prefers-reduced-motion`.
+- Project screenshots are real browser captures of the published demos stored as Lovable asset pointers in `src/assets/projects/`; never replace them with illustrations.
+- Colors, fonts and type scales are tokens/utilities in `src/styles.css` (e.g. `type-name`, `type-section`, `type-label`, `text-ember-bright`); components must not use raw color values.
+- `src/test/portfolio-content.test.ts` locks the content rules (project order, verified URLs, tech categories, no Oasis CRM, no skill levels); update it when those rules change.
