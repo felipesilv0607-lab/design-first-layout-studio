@@ -12,26 +12,37 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { profile, seo } from "../content/portfolio";
+
+function StatusPage({ code, title, text, children }: { code: string; title: string; text: string; children: ReactNode }) {
+  return (
+    <main className="shell flex min-h-screen flex-col justify-center py-16">
+      <p className="type-label flex items-center gap-3 text-muted-foreground">
+        <span className="text-ember-bright">{code}</span>
+        <span aria-hidden="true" className="h-px w-6 bg-line-strong" />
+        <span>Felipe Luz</span>
+      </p>
+      <h1 className="type-section mt-8 max-w-3xl text-foreground">
+        {title}
+        <span className="text-ember">.</span>
+      </h1>
+      <p className="mt-6 max-w-md text-base leading-relaxed text-soft">{text}</p>
+      <div className="mt-10 flex flex-wrap items-center gap-6">{children}</div>
+    </main>
+  );
+}
+
+const primaryAction =
+  "inline-flex h-12 items-center justify-center gap-3 rounded-sm bg-primary px-6 text-sm font-semibold text-primary-foreground transition-colors hover:bg-ember-bright/90";
+const secondaryAction = "inline-flex h-12 items-center text-sm font-medium text-soft hover:text-foreground";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Página não encontrada</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          O endereço acessado não existe ou foi movido.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Voltar ao início
-          </Link>
-        </div>
-      </div>
-    </div>
+    <StatusPage code="404" title="Página não encontrada" text="O endereço acessado não existe ou foi movido.">
+      <Link to="/" className={primaryAction}>
+        Voltar ao início
+      </Link>
+    </StatusPage>
   );
 }
 
@@ -43,33 +54,25 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          Não foi possível carregar a página
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Ocorreu um erro inesperado. Tente novamente ou volte ao início.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Tentar novamente
-          </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Voltar ao início
-          </a>
-        </div>
-      </div>
-    </div>
+    <StatusPage
+      code="Erro"
+      title="Não foi possível carregar a página"
+      text="Ocorreu um erro inesperado. Tente novamente ou volte ao início."
+    >
+      <button
+        type="button"
+        onClick={() => {
+          router.invalidate();
+          reset();
+        }}
+        className={primaryAction}
+      >
+        Tentar novamente
+      </button>
+      <a href="/" className={secondaryAction}>
+        <span className="link-underline">Voltar ao início</span>
+      </a>
+    </StatusPage>
   );
 }
 
@@ -80,18 +83,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Felipe Luz Cunha — Desenvolvedor Full Stack" },
-      {
-        name: "description",
-        content: "Portfólio de Felipe Luz Cunha, desenvolvedor Full Stack em Teresina (PI).",
-      },
-      { name: "author", content: "Felipe Luz Cunha" },
+      { title: seo.title },
+      { name: "description", content: seo.description },
+      { name: "author", content: profile.name },
       { name: "theme-color", content: "#121110" },
-      { property: "og:title", content: "Felipe Luz Cunha — Desenvolvedor Full Stack" },
-      {
-        property: "og:description",
-        content: "Portfólio de Felipe Luz Cunha, desenvolvedor Full Stack em Teresina (PI).",
-      },
+      { name: "color-scheme", content: "dark" },
+      { name: "application-name", content: seo.siteName },
+      { name: "apple-mobile-web-app-title", content: seo.siteName },
+      { property: "og:site_name", content: seo.siteName },
+      { property: "og:locale", content: "pt_BR" },
+      { property: "og:title", content: seo.title },
+      { property: "og:description", content: seo.description },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -106,7 +108,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      { rel: "manifest", href: "/site.webmanifest" },
     ],
   }),
   shellComponent: RootShell,

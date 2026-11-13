@@ -154,6 +154,36 @@ export const contacts = [
 ] as const;
 
 export const githubUrl = "https://github.com/felipesilv0607-lab";
+export const linkedinUrl = "https://www.linkedin.com/in/felipeluz-dev";
+
+/** Published address used for canonical links, share previews and the sitemap. */
+export const siteUrl = "https://design-first-layout-studio.lovable.app";
+
+export const seo = {
+  siteName: "Felipe Luz",
+  title: "Felipe Luz | Desenvolvedor Full Stack",
+  description:
+    "Portfólio de Felipe Luz Cunha, desenvolvedor Full Stack em Teresina (PI). Projetos com React, TypeScript, Node.js e PostgreSQL. Disponível para estágio.",
+  shareImage: { path: "/og-image.jpg", width: 1200, height: 630, alt: "Felipe Luz Cunha — Desenvolvedor Full Stack, Teresina (PI), disponível para estágio" },
+} as const;
+
+/** schema.org Person built only from facts already shown on the site. */
+export function personJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.name,
+    alternateName: "Felipe Luz",
+    jobTitle: profile.role,
+    url: siteUrl,
+    image: `${siteUrl}${seo.shareImage.path}`,
+    email: "mailto:felipesilv0607@gmail.com",
+    address: { "@type": "PostalAddress", addressLocality: "Teresina", addressRegion: "PI", addressCountry: "BR" },
+    alumniOf: { "@type": "CollegeOrUniversity", name: "Uninassau" },
+    knowsAbout: profile.mainStack,
+    sameAs: [githubUrl, linkedinUrl],
+  };
+}
 
 export const sections = [
   { id: "inicio", number: "01", label: "Início" },

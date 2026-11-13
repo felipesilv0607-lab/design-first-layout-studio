@@ -8,25 +8,32 @@ import { Projects } from "@/components/portfolio/Projects";
 import { SiteFooter } from "@/components/portfolio/SiteFooter";
 import { SiteHeader } from "@/components/portfolio/SiteHeader";
 import { Technologies } from "@/components/portfolio/Technologies";
+import { personJsonLd, seo, siteUrl } from "@/content/portfolio";
 import { useReveal } from "@/hooks/use-reveal";
 
-const title = "Felipe Luz Cunha — Desenvolvedor Full Stack";
-const description =
-  "Portfólio de Felipe Luz Cunha, desenvolvedor Full Stack em Teresina (PI). Projetos com React, TypeScript, Node.js, Express, PostgreSQL e Prisma. Disponível para estágio.";
+const shareImage = `${siteUrl}${seo.shareImage.path}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
+      { title: seo.title },
+      { name: "description", content: seo.description },
+      { property: "og:title", content: seo.title },
+      { property: "og:description", content: seo.description },
       { property: "og:type", content: "profile" },
-      { property: "og:locale", content: "pt_BR" },
+      { property: "og:url", content: `${siteUrl}/` },
+      { property: "og:image", content: shareImage },
+      { property: "og:image:width", content: String(seo.shareImage.width) },
+      { property: "og:image:height", content: String(seo.shareImage.height) },
+      { property: "og:image:alt", content: seo.shareImage.alt },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: title },
-      { name: "twitter:description", content: description },
+      { name: "twitter:title", content: seo.title },
+      { name: "twitter:description", content: seo.description },
+      { name: "twitter:image", content: shareImage },
+      { name: "twitter:image:alt", content: seo.shareImage.alt },
     ],
+    links: [{ rel: "canonical", href: `${siteUrl}/` }],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(personJsonLd()) }],
   }),
   component: Index,
 });
