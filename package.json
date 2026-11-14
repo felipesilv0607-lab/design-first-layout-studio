@@ -1,5 +1,8 @@
 {
   "name": "tanstack_start_ts",
+  "description": "Portfólio profissional de Felipe Luz Cunha — Desenvolvedor Full Stack.",
+  "author": "Felipe Luz Cunha <felipesilv0607@gmail.com>",
+  "homepage": "https://design-first-layout-studio.lovable.app",
   "private": true,
   "sideEffects": false,
   "type": "module",
