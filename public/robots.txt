@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://design-first-layout-studio.lovable.app/sitemap.xml
